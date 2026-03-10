@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self' file:">
+  <title>FlowTimer</title>
+  <link rel="stylesheet" href="shared/css/timer.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent !important;
+    }
+    .timer-container {
+      background: transparent !important;
+      justify-content: center;
+      padding: 10px;
+      gap: 8px;
+    }
+    /* ── 드롭다운/팝오버 — 드래그 영역 위에 겹쳐도 클릭 가능 ── */
+    .toolbar-area {
+      -webkit-app-region: no-drag;
+    }
+    .music-dropdown {
+      -webkit-app-region: no-drag;
+    }
+    .volume-popover {
+      -webkit-app-region: no-drag;
+    }
+    /* ── 타이머 크기 조정 ── */
+    .toolbar {
+      padding: 3px 10px;
+      gap: 1px;
+    }
+    .toolbar-btn {
+      width: 32px;
+      height: 32px;
+      -webkit-app-region: no-drag;
+    }
+    .toolbar-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    /* ── 타이머 원을 드래그 핸들로 ── */
+    .timer-face-wrapper {
+      width: 220px;
+      height: 220px;
+      -webkit-app-region: drag;
+    }
+    /* 패널 열림 시 드래그 비활성화 (클릭 우선) */
+    .timer-face-wrapper.panel-open {
+      -webkit-app-region: no-drag;
+    }
+    .progress-ring {
+      width: 220px;
+      height: 220px;
+    }
+    .timer-face {
+      width: 184px;
+      height: 184px;
+      gap: 4px;
+      padding: 16px 12px;
+    }
+    .time-adjuster {
+      -webkit-app-region: no-drag;
+      padding: 1px 4px;
+    }
+    .adjuster-btn {
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+    }
+    .adjuster-label {
+      font-size: 12px;
+    }
+    .time-display {
+      -webkit-app-region: no-drag;
+    }
+    .time-display__time {
+      font-size: 40px;
+    }
+    .time-edit {
+      -webkit-app-region: no-drag;
+    }
+    .time-edit__input {
+      width: 48px;
+      font-size: 30px;
+    }
+    .time-edit__sep {
+      font-size: 26px;
+    }
+    .controls {
+      -webkit-app-region: no-drag;
+      gap: 10px;
+    }
+    .ctrl-play {
+      width: 36px;
+      height: 36px;
+    }
+    .ctrl-play svg {
+      width: 16px;
+      height: 16px;
+    }
+    .ctrl-reset {
+      width: 30px;
+      height: 30px;
+    }
+    .ctrl-reset svg {
+      width: 14px;
+      height: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-container" id="timer-container"></div>
+
+  <script src="shared/js/constants.js"></script>
+  <script src="shared/js/timer-core.js"></script>
+  <script src="shared/js/audio-manager.js"></script>
+  <script src="shared/js/timer-ui.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

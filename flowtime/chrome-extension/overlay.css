@@ -1,0 +1,140 @@
+/* ========================================
+   Overlay Widget Styles (Shadow DOM)
+   ======================================== */
+
+/* :host — Shadow DOM 루트, :root CSS 변수 재선언 */
+:host {
+  --color-bg: #1a1a2e;
+  --color-surface: #16213e;
+  --color-surface-hover: #1f2b47;
+  --color-primary: #7c5cfc;
+  --color-primary-glow: rgba(124, 92, 252, 0.3);
+  --color-warning: #f5a623;
+  --color-warning-glow: rgba(245, 166, 35, 0.3);
+  --color-danger: #e74c3c;
+  --color-danger-glow: rgba(231, 76, 60, 0.3);
+  --color-track: #2a2a3e;
+  --color-text: #ffffff;
+  --color-text-dim: #8888aa;
+  --color-text-muted: #555577;
+  --radius: 12px;
+  --transition: 0.3s ease;
+
+  all: initial;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+/* ── 축소 상태: 60px 원형 위젯 ── */
+.overlay-collapsed {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 2px solid var(--color-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.overlay-collapsed:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5);
+  border-color: var(--color-primary);
+}
+
+.overlay-collapsed.hidden {
+  display: none;
+}
+
+/* 미니 SVG 프로그레스 링 */
+.mini-ring {
+  width: 52px;
+  height: 52px;
+  transform: rotate(-90deg);
+  position: absolute;
+}
+
+.mini-ring__track {
+  fill: none;
+  stroke: var(--color-track);
+  stroke-width: 4;
+}
+
+.mini-ring__progress {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke 0.5s ease;
+}
+
+.mini-ring__progress.warning {
+  stroke: var(--color-warning);
+}
+
+.mini-ring__progress.danger {
+  stroke: var(--color-danger);
+  animation: mini-pulse 1s ease-in-out infinite;
+}
+
+@keyframes mini-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.mini-time {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── 펼침 상태: 투명 컨테이너 (원형 위젯) ── */
+.overlay-expanded {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  animation: overlay-slide-in 0.25s ease-out;
+}
+
+.overlay-expanded.visible {
+  display: flex;
+}
+
+@keyframes overlay-slide-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── 펼침 패널 내부 .timer-container 오버라이드 ── */
+.overlay-expanded .timer-container {
+  padding: 0;
+}
+
+/* 툴바를 드래그 핸들로 사용 */
+.overlay-expanded .toolbar {
+  cursor: grab;
+}
+
+.overlay-expanded .toolbar:active {
+  cursor: grabbing;
+}

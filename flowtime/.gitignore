@@ -1,0 +1,24 @@
+# Dependencies
+electron-app/node_modules/
+
+# Build output
+electron-app/dist/
+
+# Electron shared junction (symlink to ../shared, recreated via setup-dev.js)
+electron-app/shared
+
+# Dev / test files
+test.html
+layout.png
+예시.png
+flowtimer-v1.1.0.zip
+
+# Old docs (replaced by README.md)
+PROJECT_SUMMARY.md
+
+# Claude Code internal
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db

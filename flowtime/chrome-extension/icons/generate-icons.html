@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head><title>Icon Generator</title></head>
+<body>
+<p>Right-click each canvas and "Save image as" to create icon files.</p>
+<div>
+  <h3>16x16</h3><canvas id="c16" width="16" height="16"></canvas>
+  <h3>48x48</h3><canvas id="c48" width="48" height="48"></canvas>
+  <h3>128x128</h3><canvas id="c128" width="128" height="128"></canvas>
+</div>
+<script>
+function drawIcon(canvas) {
+  const s = canvas.width;
+  const ctx = canvas.getContext('2d');
+
+  // 배경
+  ctx.fillStyle = '#7c5cfc';
+  ctx.beginPath();
+  ctx.arc(s/2, s/2, s/2, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 흰색 시계 아이콘
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = s * 0.08;
+  ctx.lineCap = 'round';
+
+  // 외곽 원
+  ctx.beginPath();
+  ctx.arc(s/2, s/2, s * 0.35, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // 시계 바늘 (12시 → 2시)
+  ctx.beginPath();
+  ctx.moveTo(s/2, s/2);
+  ctx.lineTo(s/2, s * 0.22);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(s/2, s/2);
+  ctx.lineTo(s * 0.68, s * 0.4);
+  ctx.stroke();
+}
+
+drawIcon(document.getElementById('c16'));
+drawIcon(document.getElementById('c48'));
+drawIcon(document.getElementById('c128'));
+</script>
+</body>
+</html>

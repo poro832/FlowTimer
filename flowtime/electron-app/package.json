@@ -1,0 +1,65 @@
+{
+  "name": "flowtimer",
+  "version": "1.1.0",
+  "description": "음악과 함께 흐르는 타이머 — 배경 음악, 알림음을 지원하는 카운트다운 타이머",
+  "main": "main.js",
+  "scripts": {
+    "prestart": "node setup-dev.js",
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:portable": "electron-builder --win portable"
+  },
+  "author": "FlowTimer",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.flowtimer.app",
+    "productName": "FlowTimer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "index.html",
+      { "from": "../shared", "to": "shared", "filter": ["**/*"] }
+    ],
+    "extraResources": [
+      {
+        "from": "../shared/assets",
+        "to": "shared/assets"
+      },
+      {
+        "from": "../chrome-extension/icons",
+        "to": "icons"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "../chrome-extension/icons/icon256.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FlowTimer"
+    },
+    "portable": {
+      "artifactName": "FlowTimer-Portable.exe"
+    }
+  }
+}

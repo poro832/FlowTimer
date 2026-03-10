@@ -1,0 +1,568 @@
+/* ========================================
+   FlowTimer — Dark Circular Theme
+   ======================================== */
+
+:root {
+  --color-bg: #0d0d0d;
+  --color-surface: #1a1a1a;
+  --color-surface-hover: #252525;
+  --color-primary: #7c5cfc;
+  --color-primary-glow: rgba(124, 92, 252, 0.3);
+  --color-warning: #f5a623;
+  --color-warning-glow: rgba(245, 166, 35, 0.3);
+  --color-danger: #e74c3c;
+  --color-danger-glow: rgba(231, 76, 60, 0.3);
+  --color-track: #2a2a2a;
+  --color-text: #ffffff;
+  --color-text-dim: #888888;
+  --color-text-muted: #555555;
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── 메인 컨테이너 ── */
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  position: relative;
+}
+
+/* Electron 전체화면 모드 */
+.timer-container.fullscreen {
+  width: 100vw;
+  min-height: 100vh;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* ── 툴바 영역 (드롭다운 위치 기준) ── */
+.toolbar-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── 상단 툴바 (캡슐형 필) ── */
+.toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: 4px 12px;
+}
+
+.toolbar-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-dim);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.toolbar-btn:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.toolbar-btn.active {
+  color: var(--color-primary);
+}
+
+.toolbar-btn svg {
+  pointer-events: none;
+}
+
+/* ── 음악 드롭다운 ── */
+.music-dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-track);
+  border-radius: var(--radius);
+  padding: 6px 0;
+  z-index: 10;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: dropdown-in 0.15s ease-out;
+}
+
+.music-dropdown.open {
+  display: flex;
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.music-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.music-dropdown__item:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.music-dropdown__item.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.music-dropdown__item.active::after {
+  content: '\2713';
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.music-dropdown__icon {
+  font-size: 16px;
+  line-height: 1;
+  font-style: normal;
+  width: 20px;
+  text-align: center;
+}
+
+/* ── 테마 드롭다운 ── */
+.theme-dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-track);
+  border-radius: var(--radius);
+  padding: 6px 0;
+  z-index: 10;
+  min-width: 120px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: dropdown-in 0.15s ease-out;
+}
+
+.theme-dropdown.open {
+  display: flex;
+}
+
+.theme-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.theme-dropdown__item:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.theme-dropdown__item.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.theme-dropdown__item.active::after {
+  content: '\2713';
+  margin-left: auto;
+  font-size: 13px;
+}
+
+.theme-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── 볼륨 팝오버 ── */
+.volume-popover {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-track);
+  border-radius: 10px;
+  padding: 10px 14px;
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: dropdown-in 0.15s ease-out;
+}
+
+.volume-popover.open {
+  display: flex;
+}
+
+.volume-popover svg {
+  color: var(--color-text-dim);
+  flex-shrink: 0;
+}
+
+/* ── 타이머 페이스 래퍼 (원형 링 + 페이스) ── */
+.timer-face-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── SVG 프로그레스 링 ── */
+.progress-ring {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  transform: rotate(-90deg);
+}
+
+.progress-ring__track {
+  fill: none;
+  stroke: var(--color-track);
+  stroke-width: 10;
+}
+
+.progress-ring__fill {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke 0.5s ease;
+}
+
+.progress-ring__fill.warning {
+  stroke: var(--color-warning);
+}
+
+.progress-ring__fill.danger {
+  stroke: var(--color-danger);
+  animation: ring-pulse 1s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ── 타이머 페이스 (원형, 링 안쪽) ── */
+.timer-face {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── 시간 조절 (- 1분 +) ── */
+.time-adjuster {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 2px 6px;
+}
+
+.time-adjuster.hidden {
+  visibility: hidden;
+}
+
+.adjuster-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-dim);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.adjuster-btn:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.adjuster-label {
+  font-size: 13px;
+  color: var(--color-text-dim);
+  padding: 0 4px;
+  user-select: none;
+}
+
+/* ── 시간 표시 ── */
+.time-display {
+  text-align: center;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.time-display:hover {
+  background: rgba(124, 92, 252, 0.1);
+}
+
+.time-display.hidden {
+  display: none;
+}
+
+.time-display__time {
+  font-size: 56px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* ── 인라인 시간 편집 ── */
+.time-edit {
+  display: none;
+  align-items: center;
+  gap: 2px;
+}
+
+.time-edit.visible {
+  display: flex;
+}
+
+.time-edit__input {
+  width: 56px;
+  padding: 4px 2px;
+  text-align: center;
+  font-size: 38px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  color: var(--color-text);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.time-edit__input::-webkit-outer-spin-button,
+.time-edit__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-edit__sep {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text-dim);
+}
+
+
+/* ── 컨트롤 버튼 ── */
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ctrl-btn {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.ctrl-btn:active {
+  transform: scale(0.92);
+}
+
+.ctrl-play {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 2px 12px var(--color-primary-glow);
+}
+
+.ctrl-play:hover {
+  background: #6a4ae0;
+  box-shadow: 0 4px 20px var(--color-primary-glow);
+}
+
+.ctrl-reset {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid var(--color-text-muted);
+  color: var(--color-text-dim);
+}
+
+.ctrl-reset:hover {
+  border-color: var(--color-text-dim);
+  color: var(--color-text);
+}
+
+/* ── 볼륨 슬라이더 ── */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-track);
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--color-primary-glow);
+}
+
+.volume-value {
+  font-size: 12px;
+  color: var(--color-text-dim);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ── Electron 타이틀바 ── */
+.titlebar {
+  display: none;
+  width: 100%;
+  height: 32px;
+  background: var(--color-surface);
+  -webkit-app-region: drag;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  gap: 4px;
+}
+
+.titlebar.visible {
+  display: flex;
+}
+
+.titlebar-btn {
+  -webkit-app-region: no-drag;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-dim);
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titlebar-btn:hover {
+  background: var(--color-surface-hover);
+}
+
+.titlebar-btn.close:hover {
+  background: var(--color-danger);
+  color: white;
+}
+
+/* ── 전원 버튼 활성 상태 ── */
+.toolbar-btn#btn-power.active {
+  color: var(--color-primary);
+}
+
+/* 타이머 비활성 상태 (래퍼 전체 — 툴바는 유지) */
+.timer-face-wrapper.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── 스크롤바 ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-track);
+  border-radius: 2px;
+}

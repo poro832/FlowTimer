@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "FlowTimer",
+  "version": "1.1.0",
+  "description": "음악과 함께 흐르는 타이머 — 배경 음악, 알림음, 오버레이 위젯을 지원하는 카운트다운 타이머",
+  "permissions": [
+    "storage",
+    "alarms",
+    "offscreen",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "chrome-extension/popup.html",
+    "default_icon": {
+      "16": "chrome-extension/icons/icon16.png",
+      "48": "chrome-extension/icons/icon48.png",
+      "128": "chrome-extension/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "chrome-extension/icons/icon16.png",
+    "48": "chrome-extension/icons/icon48.png",
+    "128": "chrome-extension/icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "chrome-extension/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "shared/js/constants.js",
+        "shared/js/timer-core.js",
+        "shared/js/audio-manager.js",
+        "shared/js/timer-ui.js",
+        "chrome-extension/content-script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "shared/css/*",
+        "shared/js/*",
+        "shared/assets/sounds/*",
+        "shared/assets/music/*",
+        "chrome-extension/overlay.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

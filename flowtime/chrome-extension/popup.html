@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../shared/css/timer.css">
+  <style>
+    html, body {
+      background: var(--color-bg) !important;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 316px;
+      overflow-y: auto;
+    }
+    .timer-container {
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-container" id="timer-container"></div>
+
+  <!-- 공유 코드 로드 -->
+  <script src="../shared/js/constants.js"></script>
+  <script src="../shared/js/timer-core.js"></script>
+  <script src="../shared/js/audio-manager.js"></script>
+  <script src="../shared/js/timer-ui.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
