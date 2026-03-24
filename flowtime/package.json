@@ -1,0 +1,21 @@
+{
+  "name": "flowtime",
+  "version": "1.0.0",
+  "description": "발표·집중 세션을 위한 카운트다운 타이머입니다. **Chrome 확장프로그램**과 **Electron 데스크톱 앱** 두 가지 형태로 제공되며, 핵심 코드를 공유합니다.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.3.0"
+  },
+  "jest": {
+    "setupFiles": ["./tests/setup.js"]
+  }
+}
